@@ -18,7 +18,7 @@ public class Notifications {
 
     @NotNull
     @Lob
-    private String text;
+    private String message;
 
     @Column(nullable = false , updatable = true)
     private Date reminder_date;
