@@ -13,7 +13,7 @@ import java.util.Date;
 @Table(name = "simple_task")
 @Getter
 @Setter
-public class SimpleTasks {
+public class SimpleTask {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -38,7 +38,7 @@ public class SimpleTasks {
     //Notifications
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "notifications_id" , referencedColumnName = "id")
-    private Notifications notifications;
+    private Notification notification;
 
 
     /*

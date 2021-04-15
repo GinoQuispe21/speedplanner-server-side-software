@@ -11,7 +11,7 @@ import java.util.Date;
 @Table(name = "notifications")
 @Getter
 @Setter
-public class Notifications {
+public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,7 +27,7 @@ public class Notifications {
 
     //Simple_Task
     @OneToOne(mappedBy = "notifications")
-    private SimpleTasks simpleTask;
+    private SimpleTask simpleTask;
 
     /*
     Timed_Task
