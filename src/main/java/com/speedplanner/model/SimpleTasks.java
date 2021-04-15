@@ -19,7 +19,7 @@ public class SimpleTasks {
     private Long id;
 
     @NotNull
-    private int finished;
+    private boolean finished;
 
     @Column(nullable = false)
     private Date deadline;
