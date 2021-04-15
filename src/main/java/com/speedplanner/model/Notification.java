@@ -26,12 +26,12 @@ public class Notification {
     //Relations
 
     //Simple_Task
-    @OneToOne(mappedBy = "notifications")
+    @OneToOne(mappedBy = "notification")
     private SimpleTask simpleTask;
 
     /*
     Timed_Task
-    @OneToOne(mappedBy = "notifications")
+    @OneToOne(mappedBy = "notification")
     private TimedTask timedTask;
     */
 }

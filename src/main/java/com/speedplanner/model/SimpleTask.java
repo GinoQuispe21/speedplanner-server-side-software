@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
-@Table(name = "simple_task")
+@Table(name = "simple_tasks")
 @Getter
 @Setter
 public class SimpleTask {
@@ -37,7 +37,7 @@ public class SimpleTask {
 
     //Notifications
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "notifications_id" , referencedColumnName = "id")
+    @JoinColumn(name = "notification_id" , referencedColumnName = "id")
     private Notification notification;
 
 
