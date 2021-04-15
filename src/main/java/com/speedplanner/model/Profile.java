@@ -27,6 +27,6 @@ public class Profile {
     @Size(max = 15)
     private String gender;
 
-    @OneToOne(mappedBy = "profiles")
+    @OneToOne(mappedBy = "profile")
     private User user;
 }
