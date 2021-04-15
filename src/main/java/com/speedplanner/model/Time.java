@@ -7,11 +7,12 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 @Entity
-@Table(name = "customers")
+@Table(name = "times")
 @Data
-public class Courses {
+public class Time {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,15 +21,14 @@ public class Courses {
     @NotBlank
     @NotNull
     @Size(max = 20)
-    private String name;
-
-    @NotNull
-    @Size(max = 100)
-    private String description;
+    private String day;
 
     @NotBlank
     @NotNull
-    @Size(max = 30)
-    private String email;
+    private Date startTime;
+
+    @NotBlank
+    @NotNull
+    private Date finishTime;
 
 }
