@@ -27,7 +27,7 @@ public class Notifications {
 
     //Simple_Task
     @OneToOne(mappedBy = "notifications")
-    private SimpleTask simpleTask;
+    private SimpleTasks simpleTask;
 
     /*
     Timed_Task

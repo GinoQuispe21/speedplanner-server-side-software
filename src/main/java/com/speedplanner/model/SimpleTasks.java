@@ -13,7 +13,7 @@ import java.util.Date;
 @Table(name = "simple_task")
 @Getter
 @Setter
-public class SimpleTask {
+public class SimpleTasks {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
