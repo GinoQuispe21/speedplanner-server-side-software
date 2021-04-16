@@ -9,6 +9,6 @@ public interface NotificationsService {
     Page<Notification> getAllNotification(Pageable pageable);
     Notification createNotification (Notification notification);
     Notification getNotificationById (Long Id);
-    Notification updateNotification (Long notificationsId, Notification notificationRequest);
+    Notification updateNotification (Long notificationId, Notification notificationRequest);
     ResponseEntity<?> deleteNotification (Long notificationId);
 }

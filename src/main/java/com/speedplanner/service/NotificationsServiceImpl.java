@@ -31,12 +31,12 @@ public class NotificationsServiceImpl implements NotificationsService{
     }
 
     @Override
-    public Notification updateNotification (Long notificationsId, Notification notificationRequest){
-        Notification notification = notificationsRepository.findById(notificationsId).orElseThrow(
-                () -> new ResourceNotFoundException("User not found with Id:" + notificationsId));
+    public Notification updateNotification (Long notificationId, Notification notificationRequest){
+        Notification notification = notificationsRepository.findById(notificationId).orElseThrow(
+                () -> new ResourceNotFoundException("User not found with Id:" + notificationId));
         notification.setMessage(notificationRequest.getMessage());
         notification.setReminder_date(notificationRequest.getReminder_date());
-        return notificationsRepository.save(notificationRequest);
+        return notificationsRepository.save(notification);
     }
 
     @Override
