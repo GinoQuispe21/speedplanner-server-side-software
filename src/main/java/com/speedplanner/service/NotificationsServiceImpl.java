@@ -7,8 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import com.speedplanner.exception.ResourceNotFoundException;
+import org.springframework.stereotype.Service;
 
-
+@Service
 public class NotificationsServiceImpl implements NotificationsService{
 
     @Autowired
