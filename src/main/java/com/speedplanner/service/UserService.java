@@ -1,4 +1,5 @@
-package com.speedplanner.service;
+/*package com.speedplanner.service;
 
 public interface UserService {
 }
+*/

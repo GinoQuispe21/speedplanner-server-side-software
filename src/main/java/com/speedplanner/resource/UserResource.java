@@ -1,4 +1,5 @@
-package com.speedplanner.resource;
+/*package com.speedplanner.resource;
 
 public class UserResource {
 }
+*/
