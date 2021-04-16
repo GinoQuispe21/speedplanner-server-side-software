@@ -42,12 +42,6 @@ public class SimpleTasksServiceImp implements  SimpleTasksService{
 
     @Override
     public ResponseEntity<?> deleteSimpleTask(Long simpleTaskId) {
-        /*
-        Course course = courseRepository.findById(courseId).orElseThrow(() -> new ResourceNotFoundException("Course", "Id", courseId));
-        courseRepository.delete(course);
-        return ResponseEntity.ok().build();
-        */
-
         SimpleTask simpleTask = simpleTasksRepository.findById(simpleTaskId).orElseThrow(() -> new ResourceNotFoundException("Simple Task" , "Id" , simpleTaskId));
         simpleTasksRepository.delete(simpleTask);
         return ResponseEntity.ok().build();
