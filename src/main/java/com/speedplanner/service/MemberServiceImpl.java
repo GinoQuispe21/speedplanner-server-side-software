@@ -36,7 +36,7 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public Member createCustomer(Long groupId, Member member) {
+    public Member createMember(Long groupId, Member member) {
         return groupRepository.findById(groupId).map(group -> {
             member.setGroup(group);
             return memberRepository.save(member);

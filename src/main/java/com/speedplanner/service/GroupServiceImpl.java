@@ -15,7 +15,7 @@ public class GroupServiceImpl implements GroupService {
     private GroupRepository groupRepository;
 
     @Override
-    public Page<Group> getAllUsers(Pageable pageable) {
+    public Page<Group> getAllGroups(Pageable pageable) {
         return groupRepository.findAll(pageable);
     }
 

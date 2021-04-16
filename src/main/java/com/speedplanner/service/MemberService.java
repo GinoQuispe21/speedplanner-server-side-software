@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 public interface MemberService {
     Page<Member> getAllMembersByGroupId(Long groupId, Pageable pageable);
     Member getMemberByIdAndGroupId(Long groupId, Long memberId);
-    Member createCustomer(Long groupId, Member member);
+    Member createMember(Long groupId, Member member);
     Member updateMember(Long groupId, Long memberId, Member memberDetail);
     ResponseEntity<?> deleteMember(Long groupId, Long memberId);
 }
