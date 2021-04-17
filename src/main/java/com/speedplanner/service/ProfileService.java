@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface ProfileService {
-    Profile createProfile(Long userId);
+    Profile createProfile(Long userId, Profile profile);
     Profile getProfileById(Long id);
     Page<Profile> getAllProfiles(Pageable pageable);
     Profile updateProfile(Long profileId, Profile profileRequest);
