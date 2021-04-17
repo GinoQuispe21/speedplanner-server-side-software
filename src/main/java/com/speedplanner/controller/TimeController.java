@@ -30,36 +30,32 @@ public class TimeController {
     @Autowired
     private TimeService timeService;
 
-    @GetMapping("/times")
-    public Page<TimeResource> getAllTimes(Pageable pageable) {
-        Page<Time> timePage = timeService.getAllTimes(pageable);
+    @GetMapping("/courses/{courseId}/times")
+    public Page<TimeResource> getAllTimesByCourseId(@PathVariable(name = "courseId") Long courseId, Pageable pageable) {
+        Page<Time> timePage = timeService.getAllTimesByCourseId(courseId, pageable);
         List<TimeResource> resources = timePage.getContent().stream().map(this::convertToResource).collect(Collectors.toList());
-
         return new PageImpl<>(resources, pageable, resources.size());
     }
 
-    @GetMapping("/times/{id}")
-    public TimeResource getTimeById(@PathVariable(name = "id") Long timeId) {
-        return convertToResource(timeService.getTimeById(timeId));
+    @GetMapping("/courses/{courseId}/times/{timeId}")
+    public TimeResource getTimeByIdAndCourseId(@PathVariable(name = "courseId") Long courseId, @PathVariable(name = "timeId") Long timeId) {
+        return convertToResource(timeService.getTimeByIdAndCourseId(courseId, timeId));
     }
 
-    @PostMapping("/times")
-    public TimeResource createTime(@Valid @RequestBody SaveTimeResource resource)  {
-        Time time = convertToEntity(resource);
-        return convertToResource(timeService.createTime(time));
+    @PostMapping("/courses/{courseId}/times")
+    public TimeResource createTime(@PathVariable(name = "courseId") Long courseId, @Valid @RequestBody SaveTimeResource resource) {
+        return convertToResource(timeService.createTime(courseId, convertToEntity(resource)));
     }
 
-    @PutMapping("/times/{id}")
-    public TimeResource updateTime(@PathVariable(name = "id") Long timeId, @Valid @RequestBody SaveTimeResource resource) {
-        Time time = convertToEntity(resource);
-        return convertToResource(timeService.updateTime(timeId, time));
+    @PutMapping("/courses/{courseId}/times/{timeId}")
+    public TimeResource updateTime(@PathVariable(name = "courseId") Long courseId, @PathVariable(name = "timeId") Long timeId, @Valid @RequestBody SaveTimeResource resource) {
+        return convertToResource(timeService.updateTime(courseId, timeId, convertToEntity(resource)));
     }
 
-    @DeleteMapping("/times/{id}")
-    public ResponseEntity<?> deleteItem(@PathVariable(name = "id") Long timeId) {
-        return timeService.deleteTime(timeId);
+    @DeleteMapping("/courses/{courseId}/times/{timeId}")
+    public ResponseEntity<?> deleteTime(@PathVariable(name = "courseId") Long courseId, @PathVariable(name = "timeId") Long timeId) {
+        return timeService.deleteTime(courseId, timeId);
     }
-
     private Time convertToEntity(SaveTimeResource resource) { return mapper.map(resource, Time.class); }
 
     private TimeResource convertToResource(Time entity) { return mapper.map(entity, TimeResource.class); }

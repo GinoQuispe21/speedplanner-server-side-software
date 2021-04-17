@@ -31,4 +31,10 @@ public class Time {
     @NotNull
     private Date finishTime;
 
+    //Many to one Relationship betwen Course and Time
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "course_id", nullable = false)
+    @JsonIgnore
+    private Course course;
+
 }

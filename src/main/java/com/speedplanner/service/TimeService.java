@@ -6,9 +6,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
 public interface TimeService {
-    ResponseEntity<?> deleteTime(Long timeId);
-    Time updateTime(Long timeId, Time timeRequest);
-    Time createTime(Time time);
-    Time getTimeById(Long timeId);
-    Page<Time> getAllTimes(Pageable pageable);
+    ResponseEntity<?> deleteTime(Long courseId, Long timeId);
+    Time updateTime(Long courseId, Long timeId, Time timeRequest);
+    Time createTime(Long courseId, Time time);
+    Time getTimeByIdAndCourseId(Long courseId, Long timeId);
+    Page<Time> getAllTimesByCourseId(Long courseId, Pageable pageable);
 }
