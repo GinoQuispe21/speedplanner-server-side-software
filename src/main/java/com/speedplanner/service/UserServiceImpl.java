@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
@@ -31,12 +33,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User updateUser(Long userId, User userRequest) {
         User user = userRepository.findById(userId).orElseThrow(
-                () -> new ResourceNotFoundException("User not found with Id: "+userId)
-        );
+                () -> new ResourceNotFoundException("User not found with Id: "+userId));
         user.setUsername(userRequest.getUsername());
         user.setPassword(userRequest.getPassword());
         user.setEmail(userRequest.getEmail());
-        return userRepository.save(userRequest);
+        return userRepository.save(user);
     }
 
     @Override
