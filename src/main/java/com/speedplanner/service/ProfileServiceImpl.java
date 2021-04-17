@@ -2,7 +2,6 @@ package com.speedplanner.service;
 
 import com.speedplanner.exception.ResourceNotFoundException;
 import com.speedplanner.model.Profile;
-import com.speedplanner.model.User;
 import com.speedplanner.repository.ProfileRepository;
 import com.speedplanner.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +42,7 @@ public class ProfileServiceImpl implements ProfileService {
         return profileRepository.findById(profileId).map(profile -> {
             profile.setAge(profileRequest.getAge());
             profile.setGender(profileRequest.getGender());
-            profile.setFull_name(profileRequest.getFull_name());
+            profile.setFullName(profileRequest.getFullName());
             return profileRepository.save(profile);
         }).orElseThrow(() -> new ResourceNotFoundException("Profile", "Id", profileId));
     }

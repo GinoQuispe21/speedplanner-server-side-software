@@ -18,7 +18,7 @@ public class Profile {
     @NotBlank
     @NotNull
     @Size(max = 100)
-    private String full_name;
+    private String fullName;
 
     int age;
 
