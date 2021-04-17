@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -49,6 +50,11 @@ public class UserController {
                                    @Valid @RequestBody SaveUserResource resource){
         User user = convertToEntity(resource);
         return convertToResource(userService.updateUser(userId, user));
+    }
+
+    @DeleteMapping("/users/{userId}")
+    public ResponseEntity<?> deleteUser(@PathVariable(name = "userId") Long userId){
+        return userService.deleteUser(userId);
     }
 
     private User convertToEntity(SaveUserResource resource){
