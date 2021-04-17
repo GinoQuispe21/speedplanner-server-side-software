@@ -1,5 +1,6 @@
-package com.speedplanner.model;
+/*package com.speedplanner.model;
 
 public class User {
 
 }
+*/
