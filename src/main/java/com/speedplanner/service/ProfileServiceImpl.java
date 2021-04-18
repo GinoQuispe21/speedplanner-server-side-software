@@ -2,11 +2,10 @@ package com.speedplanner.service;
 
 import com.speedplanner.exception.ResourceNotFoundException;
 import com.speedplanner.model.Profile;
+import com.speedplanner.model.User;
 import com.speedplanner.repository.ProfileRepository;
 import com.speedplanner.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +18,10 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public Profile createProfile(Long userId, Profile profile) {
-        return userRepository.findById(userId).map(user -> {
-            profile.setUser(user);
-            profile.setId(userId);
-            return profileRepository.save(profile);
-        }).orElseThrow( () -> new ResourceNotFoundException("User not found with Id: "+userId));
+        User user = userRepository.findById(userId).
+                orElseThrow(() -> new ResourceNotFoundException("User not found with Id: "+userId));
+        profile.setUser(user);
+        return profileRepository.save(profile);
     }
 
     @Override
@@ -33,27 +31,16 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public Page<Profile> getAllProfiles(Pageable pageable) {
-        return profileRepository.findAll(pageable);
+    public Profile updateProfile(Long userId, Profile profileRequest) {
+        if(!userRepository.existsById(userId))
+            throw new ResourceNotFoundException("User", "Id", userId);
+
+        Profile profile = profileRepository.findById(userId).orElseThrow(() ->
+                new ResourceNotFoundException("Profile not found for user with Id: "+userId));
+        profile.setAge(profileRequest.getAge());
+        profile.setGender(profileRequest.getGender());
+        profile.setFullName(profileRequest.getFullName());
+        return profileRepository.save(profile);
     }
 
-    @Override
-    public Profile updateProfile(Long profileId, Profile profileRequest) {
-        if(!userRepository.existsById(profileId))
-            throw new ResourceNotFoundException("User", "Id", profileId);
-        return profileRepository.findById(profileId).map(profile -> {
-            profile.setAge(profileRequest.getAge());
-            profile.setGender(profileRequest.getGender());
-            profile.setFullName(profileRequest.getFullName());
-            return profileRepository.save(profile);
-        }).orElseThrow(() -> new ResourceNotFoundException("Profile", "Id", profileId));
-    }
-
-    @Override
-    public ResponseEntity<?> deleteProfile(Long id) {
-        return profileRepository.findById(id).map(profile -> {
-            profileRepository.delete(profile);
-            return ResponseEntity.ok().build();
-        }).orElseThrow(() -> new ResourceNotFoundException("Profile not found with Id: "+id));
-    }
 }
