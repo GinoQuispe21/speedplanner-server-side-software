@@ -1,6 +1,7 @@
 package com.speedplanner.service;
 
 import com.speedplanner.exception.ResourceNotFoundException;
+import com.speedplanner.model.Profile;
 import com.speedplanner.model.User;
 import com.speedplanner.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,5 +48,14 @@ public class UserServiceImpl implements UserService {
             return ResponseEntity.ok().build();
         }).orElseThrow(() -> new ResourceNotFoundException(
                 "User not found with Id: " + userId));
+    }
+
+    @Override
+    public User setUserProfile(Long userId, Profile profile) {
+        return userRepository.findById(userId).map(user -> {
+            user.setProfile(profile);
+            return userRepository.save(user);
+        }).orElseThrow(() ->
+                new ResourceNotFoundException("User not found with Id: "+userId));
     }
 }
