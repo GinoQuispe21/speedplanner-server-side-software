@@ -1,6 +1,7 @@
 package com.speedplanner.controller;
 
 import com.speedplanner.model.Notification;
+import com.speedplanner.repository.SimpleTasksRepository;
 import com.speedplanner.resource.NotificationsResource;
 import com.speedplanner.resource.SaveNotificationsResource;
 import com.speedplanner.service.NotificationsService;
@@ -26,34 +27,34 @@ public class NotificationController {
     @Autowired
     private NotificationsService notificationsService;
 
-    @GetMapping("/notifications")
-    public Page<NotificationsResource> getAllNotifications(Pageable pageable) {
-        Page<Notification> notificationPage = notificationsService.getAllNotification(pageable);
+    @GetMapping("/simpletasks/{simpleTaskId}/notifications")
+    public Page<NotificationsResource> getAllNotificationsBySimpleTaskId(@PathVariable(name = "simpleTaskId") Long simpleTaskId, Pageable pageable) {
+        Page<Notification> notificationPage = notificationsService.getAllNotificationBySimpleTaskId(simpleTaskId , pageable);
         List<NotificationsResource> resource = notificationPage.getContent().stream().map(this::convertToResource).collect(Collectors.toList());
 
         return new PageImpl<>(resource , pageable , resource.size());
     }
 
-    @GetMapping("/notifications/{id}")
-    public NotificationsResource getNotificationById(@PathVariable(name = "id") Long notificationId){
-        return convertToResource(notificationsService.getNotificationById(notificationId));
+    @GetMapping("/simpletasks/{simpleTaskId}/notifications/{id}")
+    public NotificationsResource getNotificationByIdAndSimpleTaskId(@PathVariable(name = "simpleTaskId") Long simpleTaskId , @PathVariable(name = "id") Long notificationId){
+        return convertToResource(notificationsService.getNotificationByIdAndSimpleTaskId(simpleTaskId , notificationId));
     }
 
-    @PostMapping("/notifications")
-    public NotificationsResource createNotification(@Valid @RequestBody SaveNotificationsResource resource){
+    @PostMapping("/simpletasks/{simpleTaskId}/notifications")
+    public NotificationsResource createNotification(@PathVariable(name = "simpleTaskId") Long simpleTaskId, @Valid @RequestBody SaveNotificationsResource resource){
         Notification notification = convertToEntity(resource);
-        return convertToResource(notificationsService.createNotification(notification));
+        return convertToResource(notificationsService.createNotification(simpleTaskId,notification));
     }
 
-    @PutMapping("/notifications/{id}")
-    public NotificationsResource updateNotifications(@PathVariable(name = "id") Long notificationId , @Valid @RequestBody SaveNotificationsResource resource){
+    @PutMapping("/simpletasks/{simpleTaskId}/notifications/{id}")
+    public NotificationsResource updateNotifications(@PathVariable(name = "simpleTaskId") Long simpleTaskId ,@PathVariable(name = "id") Long notificationId , @Valid @RequestBody SaveNotificationsResource resource){
         Notification notification = convertToEntity(resource);
-        return convertToResource(notificationsService.updateNotification(notificationId , notification ));
+        return convertToResource(notificationsService.updateNotification(simpleTaskId,notificationId , notification ));
     }
 
-    @DeleteMapping("/notifications/{id}")
-    public ResponseEntity<?> deleteNotifications(@PathVariable(name = "id") Long notificationId){
-        return notificationsService.deleteNotification(notificationId);
+    @DeleteMapping("/simpletasks/{simpleTaskId}/notifications/{id}")
+    public ResponseEntity<?> deleteNotifications(@PathVariable(name = "simpleTaskId") Long simpleTaskId,@PathVariable(name = "id") Long notificationId){
+       return notificationsService.deleteNotification(simpleTaskId, notificationId);
     }
 
     private Notification convertToEntity(SaveNotificationsResource resource) {return mapper.map(resource , Notification.class);}
