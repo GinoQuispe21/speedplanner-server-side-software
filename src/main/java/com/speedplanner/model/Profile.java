@@ -1,5 +1,6 @@
 package com.speedplanner.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -12,7 +13,7 @@ import javax.validation.constraints.Size;
 @Data
 public class Profile {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long id;
 
     @NotBlank
@@ -27,6 +28,9 @@ public class Profile {
     @Size(max = 15)
     private String gender;
 
-    @OneToOne(mappedBy = "profile")
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 }
