@@ -1,5 +1,6 @@
 package com.speedplanner.service;
 
+import com.speedplanner.model.Profile;
 import com.speedplanner.model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,4 +12,5 @@ public interface UserService {
     Page<User> getAllUsers(Pageable pageable);
     User updateUser(Long userId, User userRequest);
     ResponseEntity<?> deleteUser(Long userId);
+    User setUserProfile(Long userId, Profile profile);
 }
