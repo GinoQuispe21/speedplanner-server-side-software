@@ -1,5 +1,6 @@
 package com.speedplanner.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -29,7 +30,8 @@ public class User {
     @Size(max = 40)
     private String email;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "profile_id", referencedColumnName = "id")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    @JsonIgnore
     private Profile profile;
 }
