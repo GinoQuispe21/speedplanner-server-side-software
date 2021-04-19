@@ -24,38 +24,46 @@ public class NotificationsServiceImpl implements NotificationsService {
             notification.setSimpleTask(SimpleTask);
             return notificationsRepository.save(notification);
         }).orElseThrow(
-                () -> new ResourceNotFoundException("Simple Task", "Id", simpleTaskId));
+                () -> new ResourceNotFoundException("Simple Task not found with id: " + simpleTaskId));
     }
 
     @Override
-    public Notification getNotificationByIdAndSimpleTaskId(Long simpleTaskId, Long Id) {
-        return notificationsRepository.findByIdAndSimpleTaskId(simpleTaskId, Id).orElseThrow(
-                () -> new ResourceNotFoundException("Notification not found with Id " + Id + "and Simple Task Id: " + simpleTaskId));
+    public Notification getNotificationBySimpleTaskId(Long simpleTaskId) {
+        return notificationsRepository.findById(simpleTaskId).orElseThrow(
+                () -> new ResourceNotFoundException("Simple Task not found with Id " + simpleTaskId ));
     }
 
     @Override
-    public Page<Notification> getAllNotificationBySimpleTaskId(Long simpleTaskId, Pageable pageable) {
-        return notificationsRepository.findBySimpleTaskId(simpleTaskId, pageable);
+    public Notification getNotificationById(Long notificationsId){
+        return notificationsRepository.findById(notificationsId).orElseThrow(
+                () -> new ResourceNotFoundException("Notification not found with Id: " + notificationsId ));
     }
 
+
     @Override
-    public Notification updateNotification(Long simpleTaskId, Long notificationId, Notification notificationRequest) {
+    public Page<Notification> getAllNotification(Pageable pageable) {
+        return notificationsRepository.findAll(pageable);
+    }
+
+
+
+    @Override
+    public Notification updateNotification(Long simpleTaskId,  Notification notificationRequest) {
         if (!simpleTasksRepository.existsById(simpleTaskId))
             throw new ResourceNotFoundException("Simple Task", "Id", simpleTaskId);
-        return notificationsRepository.findById(notificationId).map(notification -> {
-            notification.setMessage(notificationRequest.getMessage());
-            notification.setReminder_date(notificationRequest.getReminder_date());
-            return notificationsRepository.save(notification);
-        }).orElseThrow(() -> new ResourceNotFoundException("Notification", "Id", notificationId));
+        Notification notification = notificationsRepository.findBySimpleTaskId(simpleTaskId);
+        notification.setMessage(notificationRequest.getMessage());
+        notification.setReminder_date(notificationRequest.getReminder_date());
+        return notificationsRepository.save(notification);
     }
 
     @Override
-    public ResponseEntity<?> deleteNotification(Long simpleTaskId, Long notificationId) {
-        return notificationsRepository.findByIdAndSimpleTaskId(simpleTaskId, notificationId).map(notification -> {
+    public ResponseEntity<?> deleteNotification(Long notificationId) {
+        return notificationsRepository.findById(notificationId).map(notification -> {
             notificationsRepository.delete(notification);
             return ResponseEntity.ok().build();
         }).orElseThrow(
-                () -> new ResourceNotFoundException("Notification not found with Id " + notificationId + "and Simple Task Id: " + simpleTaskId));
+                () -> new ResourceNotFoundException("Notification not found with Id " + notificationId ));
     }
 }
 

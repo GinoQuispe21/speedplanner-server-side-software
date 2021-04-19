@@ -36,8 +36,7 @@ public class SimpleTask {
     //Relations
 
     //Notifications
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "notification_id" , referencedColumnName = "id")
+    @OneToOne(mappedBy = "simpleTask")
     private Notification notification;
 
 

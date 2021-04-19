@@ -10,6 +10,5 @@ import java.util.Optional;
 
 @Repository
 public interface NotificationsRepository extends JpaRepository<Notification, Long> {
-    Page<Notification> findBySimpleTaskId(Long simpleTaskId , Pageable pageable);
-    Optional<Notification> findByIdAndSimpleTaskId(Long id , Long simpleTaskId);
+    Notification findBySimpleTaskId(Long simpleTaskId);
 }

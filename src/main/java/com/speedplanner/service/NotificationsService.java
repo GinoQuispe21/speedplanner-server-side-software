@@ -7,9 +7,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
 public interface NotificationsService {
-    Page<Notification> getAllNotificationBySimpleTaskId(Long simpleTaskId,Pageable pageable);
+    ResponseEntity<?> deleteNotification (Long notificationId);
+    Notification updateNotification (Long simpleTaskId, Notification notificationRequest);
     Notification createNotification (Long simpleTaskId , Notification notification);
-    Notification getNotificationByIdAndSimpleTaskId(Long simpleTaskId, Long Id);
-    Notification updateNotification (Long simpleTaskId,Long notificationId, Notification notificationRequest);
-    ResponseEntity<?> deleteNotification (Long simpleTaskId,Long notificationId);
+    Notification getNotificationById(Long notificationsId);
+    Notification getNotificationBySimpleTaskId(Long simpleTaskId);
+    Page<Notification> getAllNotification(Pageable pageable);
 }
