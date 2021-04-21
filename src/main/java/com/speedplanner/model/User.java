@@ -1,4 +1,4 @@
-/*package com.speedplanner.model;
+package com.speedplanner.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
@@ -35,4 +35,3 @@ public class User {
     @JsonIgnore
     private Profile profile;
 }
-*/

@@ -1,4 +1,4 @@
-/*package com.speedplanner.resource;
+package com.speedplanner.resource;
 
 import lombok.Data;
 
@@ -9,4 +9,3 @@ public class UserResource {
     private String password;
     private String email;
 }
-*/

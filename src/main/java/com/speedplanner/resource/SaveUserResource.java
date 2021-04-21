@@ -1,4 +1,4 @@
-/*package com.speedplanner.resource;
+package com.speedplanner.resource;
 
 import lombok.Data;
 import javax.validation.constraints.NotBlank;
@@ -23,4 +23,3 @@ public class SaveUserResource {
     @Size(max = 40)
     private String email;
 }
-*/

@@ -1,4 +1,4 @@
-/*package com.speedplanner.service;
+package com.speedplanner.service;
 
 import com.speedplanner.exception.ResourceNotFoundException;
 import com.speedplanner.model.Profile;
@@ -59,4 +59,3 @@ public class UserServiceImpl implements UserService {
                 new ResourceNotFoundException("User not found with Id: "+userId));
     }
 }
-*/
