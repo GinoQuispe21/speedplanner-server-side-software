@@ -13,7 +13,7 @@ public class SpeedplannerApplication {
     }
 
     @Bean
-    public ModelMapper modelMapper(){
-        return new ModelMapper();
-    }
+    public ModelMapper modelMapper() {return new ModelMapper();}
 }
+
+

@@ -1,16 +1,19 @@
-/*package com.speedplanner.model;
+package com.speedplanner.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 @Entity
-@Table(name = "users")
+@Table(name = "times")
 @Data
-public class User {
+public class Time {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,21 +21,20 @@ public class User {
     @NotBlank
     @NotNull
     @Size(max = 20)
-    private String username;
+    private String day;
 
     @NotBlank
     @NotNull
-    @Size(max = 30)
-    private String password;
+    private Date startTime;
 
     @NotBlank
     @NotNull
-    @Size(max = 40)
-    private String email;
+    private Date finishTime;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
+    //Many to one Relationship betwen Course and Time
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "course_id", nullable = false)
     @JsonIgnore
-    private Profile profile;
+    private Course course;
+
 }
-*/

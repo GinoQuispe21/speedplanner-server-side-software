@@ -65,3 +65,4 @@ public class UserController {
         return mapper.map(entity, UserResource.class);
     }
 }
+

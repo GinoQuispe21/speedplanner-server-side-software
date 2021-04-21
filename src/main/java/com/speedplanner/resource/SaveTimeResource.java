@@ -1,26 +1,24 @@
-/*package com.speedplanner.resource;
+package com.speedplanner.resource;
 
 import lombok.Data;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 @Data
-public class SaveUserResource {
-
+public class SaveTimeResource {
     @NotBlank
     @NotNull
     @Size(max = 20)
-    private String username;
+    private String day;
 
     @NotBlank
     @NotNull
-    @Size(max = 30)
-    private String password;
+    private Date startTime;
 
     @NotBlank
     @NotNull
-    @Size(max = 40)
-    private String email;
+    private Date finishTime;
 }
-*/

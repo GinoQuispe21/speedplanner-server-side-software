@@ -1,4 +1,4 @@
-package com.speedplanner.service;
+/*package com.speedplanner.service;
 
 import com.speedplanner.model.Profile;
 import com.speedplanner.model.User;
@@ -14,3 +14,4 @@ public interface UserService {
     ResponseEntity<?> deleteUser(Long userId);
     User setUserProfile(Long userId, Profile profile);
 }
+*/
