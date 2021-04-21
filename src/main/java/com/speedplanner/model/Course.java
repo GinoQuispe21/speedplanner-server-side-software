@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @Table(name = "courses")
@@ -31,4 +32,6 @@ public class Course {
     @Size(max = 30)
     private String email;
 
+    @OneToMany(mappedBy = "courses")
+    private List<SimpleTask> simpleTasks;
 }

@@ -39,20 +39,9 @@ public class SimpleTask {
     @OneToOne(mappedBy = "simpleTask")
     private Notification notification;
 
-
-    /*
-    courses
+    //Course
     @ManyToOne
-    @JoinColumn(name = "course_id" , nullable = false)
-    @JsonIgnore
+    @JoinColumn(name = "course_id" , referencedColumnName = "id")
     private Course course;
 
-    groups
-    @ManyToOne
-    @JoinColumn(name = "groups_id" , nullable = false)
-    @JsonIgnore
-    private Groups groups:
-
-
-     */
 }
