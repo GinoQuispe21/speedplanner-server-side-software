@@ -1,9 +1,9 @@
 package com.speedplanner.repository;
 
-import com.speedplanner.model.User;
+import com.speedplanner.model.Course;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface CourseRepository extends JpaRepository<Course, Long> {
 }
