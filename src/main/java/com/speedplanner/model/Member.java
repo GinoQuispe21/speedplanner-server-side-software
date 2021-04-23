@@ -3,6 +3,8 @@ package com.speedplanner.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -19,14 +21,14 @@ public class Member {
 
     @NotNull
     @NotBlank
-    private String full_name;
+    private String fullName;
 
     @NotNull
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "group_id", nullable = false)
+    @JoinColumn(name = "studyGroup_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
-    private Group group;
-
+    private StudyGroup studyGroup;
 }

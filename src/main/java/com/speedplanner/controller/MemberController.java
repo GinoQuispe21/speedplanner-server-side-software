@@ -2,7 +2,6 @@ package com.speedplanner.controller;
 
 import com.speedplanner.model.Member;
 import com.speedplanner.resource.MemberResource;
-import com.speedplanner.resource.SaveGroupResource;
 import com.speedplanner.resource.SaveMemberResource;
 import com.speedplanner.service.MemberService;
 import org.modelmapper.ModelMapper;
@@ -27,32 +26,33 @@ public class MemberController {
     @Autowired
     private MemberService memberService;
 
-    @GetMapping("/groups/{groupId}/members")
-    public Page<MemberResource> getAllMembersByGroupId(@PathVariable(name = "groupId") Long groupId, Pageable pageable) {
-        Page<Member> memberPage = memberService.getAllMembersByGroupId(groupId, pageable);
+    @GetMapping("/studyGroups/{studyGroupId}/members")
+    public Page<MemberResource> getAllMembersByStudyGroupId(@PathVariable(name = "studyGroupId") Long studyGroupId, Pageable pageable) {
+        Page<Member> memberPage = memberService.getAllMembersByStudyGroupId(studyGroupId, pageable);
         List<MemberResource> resources = memberPage.getContent().stream().map(this::convertToResource).collect(Collectors.toList());
         return new PageImpl<>(resources, pageable, resources.size());
     }
 
-    @PostMapping("/groups/{groupId}/members")
-    public MemberResource createMember(@PathVariable(name = "groupId") Long groupId, @Valid @RequestBody SaveMemberResource resource) {
-
-        return convertToResource(memberService.createMember(groupId, convertToEntity(resource)));
+    @PostMapping("/studyGroups/{studyGroupId}/members")
+    public MemberResource createMember(@PathVariable(name = "studyGroupId") Long studyGroupId, @Valid @RequestBody SaveMemberResource resource) {
+        return convertToResource(memberService.createMember(studyGroupId, convertToEntity(resource)));
     }
 
-    @PutMapping("/groups/{groupId}/members/{memberId}")
-    public MemberResource updateMember(@PathVariable(name = "groupId") Long groupId, @PathVariable(name = "memberId") Long memberId, @Valid @RequestBody SaveMemberResource resource) {
+    @PutMapping("/studyGroups/{studyGroupId}/members/{memberId}")
+    public MemberResource updateMember(@PathVariable(name = "studyGroupId") Long groupId, @PathVariable(name = "memberId") Long memberId,
+                                       @Valid @RequestBody SaveMemberResource resource) {
         return convertToResource(memberService.updateMember(groupId, memberId, convertToEntity(resource)));
     }
 
-    @DeleteMapping("/groups/{groupId}/members/{memberId}")
-    public ResponseEntity<?> deleteMember(@PathVariable(name = "groupId") Long groupId, @PathVariable(name = "memberId") Long memberId) {
-        return memberService.deleteMember(groupId, memberId);
+    @DeleteMapping("/studyGroups/{studyGroupId}/members/{memberId}")
+    public ResponseEntity<?> deleteMember(@PathVariable(name = "studyGroupId") Long studyGroupId, @PathVariable(name = "memberId") Long memberId) {
+        return memberService.deleteMember(studyGroupId, memberId);
     }
 
-    @GetMapping("/groups/{groupId}/members/{memberId}")
-    public MemberResource getMemberByIdAndGroupId(@PathVariable(name = "groupId") Long groupId, @PathVariable(name = "memberId") Long memberId) {
-        return convertToResource(memberService.getMemberByIdAndGroupId(groupId, memberId));
+    @GetMapping("/studyGroups/{studyGroupId}/members/{memberId}")
+    public MemberResource getMemberByIdAndGroupId(@PathVariable(name = "studyGroupId") Long studyGroupId,
+                                                  @PathVariable(name = "memberId") Long memberId) {
+        return convertToResource(memberService.getMemberByIdAndStudyGroupId(studyGroupId, memberId));
     }
 
     private Member convertToEntity(SaveMemberResource resource) { return mapper.map(resource, Member.class); }
