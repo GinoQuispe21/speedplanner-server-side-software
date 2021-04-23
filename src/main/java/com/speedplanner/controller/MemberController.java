@@ -30,7 +30,7 @@ public class MemberController {
     private MemberService memberService;
 
     @Operation(summary = "Get all Members by Study Group Id", description = "Get all members from a study group by the group Id", tags = { "members" })
-    @GetMapping("/studyGrou ps/{studyGroupId}/members")
+    @GetMapping("/studyGroups/{studyGroupId}/members")
     public Page<MemberResource> getAllMembersByStudyGroupId(@PathVariable(name = "studyGroupId") Long studyGroupId, Pageable pageable) {
         Page<Member> memberPage = memberService.getAllMembersByStudyGroupId(studyGroupId, pageable);
         List<MemberResource> resources = memberPage.getContent().stream().map(this::convertToResource).collect(Collectors.toList());
