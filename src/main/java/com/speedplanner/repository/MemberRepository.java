@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
-    Page<Member> findByGroupId(Long groupId, Pageable pageable);
-    Optional<Member> findByIdAndGroupId(Long Id, Long groupId);
+    Page<Member> findByStudyGroupId(Long groupId, Pageable pageable);
+    Optional<Member> findByIdAndStudyGroupId(Long Id, Long groupId);
 }
 
