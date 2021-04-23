@@ -15,7 +15,7 @@ public class SaveMemberResource {
     @NotNull
     @Column(unique = true)
     @Size(max = 30)
-    private String full_name;
+    private String fullName;
 
     @NotNull
     @Column

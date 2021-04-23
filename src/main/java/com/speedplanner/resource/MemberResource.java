@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class MemberResource {
     private long id;
-    private String full_name;
+    private String fullName;
     private String description;
 }
