@@ -4,6 +4,8 @@ import com.speedplanner.model.User;
 import com.speedplanner.resource.SaveUserResource;
 import com.speedplanner.resource.UserResource;
 import com.speedplanner.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,6 +20,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
+@Tag(name = "Users", description = "User API")
 public class UserController {
     @Autowired
     private UserService userService;
@@ -25,6 +28,7 @@ public class UserController {
     @Autowired
     ModelMapper mapper;
 
+    @Operation(summary = "Create User", description = "Create a new user from Speedplanner", tags = { "users" })
     @PostMapping("/users")
     public UserResource createUser(@Valid @RequestBody SaveUserResource resource){
         User user = convertToEntity(resource);
@@ -32,6 +36,7 @@ public class UserController {
     }
 
     @GetMapping("/users")
+    @Operation(summary = "Get all Users", description = "Get all Users from Speedplanner", tags = { "users" })
     public Page<UserResource> getAllUsers(Pageable pageable){
         Page<User> userPage = userService.getAllUsers(pageable);
         List<UserResource> resources = userPage.getContent()
@@ -41,10 +46,12 @@ public class UserController {
     }
 
     @GetMapping("/users/{userId}")
+    @Operation(summary = "Get User by Id", description = "Get User by Id from Speedplanner", tags = { "users" })
     public UserResource getUserById(@PathVariable(name = "userId") Long userId){
         return convertToResource(userService.getUserById(userId));
     }
 
+    @Operation(summary = "Update User", description = "Update user by his Id from Speedplanner", tags = { "users" })
     @PutMapping("/users/{userId}")
     public UserResource updateUser(@PathVariable(name = "userId") Long userId,
                                    @Valid @RequestBody SaveUserResource resource){
@@ -52,6 +59,7 @@ public class UserController {
         return convertToResource(userService.updateUser(userId, user));
     }
 
+    @Operation(summary = "Delete User", description = "Delete user by his Id from Speedplanner", tags = { "users" })
     @DeleteMapping("/users/{userId}")
     public ResponseEntity<?> deleteUser(@PathVariable(name = "userId") Long userId){
         return userService.deleteUser(userId);
