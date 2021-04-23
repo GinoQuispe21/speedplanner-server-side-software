@@ -24,6 +24,7 @@ public class Notification {
     private Date reminder_date;
 
     //Relations
+    //TODO:
 
     //Simple_Task
     @OneToOne(cascade = CascadeType.ALL)

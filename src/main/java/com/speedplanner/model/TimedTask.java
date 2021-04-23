@@ -40,9 +40,10 @@ public class TimedTask {
     //Relations
 
     //Notifications
+    /*
     @OneToOne(mappedBy = "timedTask")
     private Notification notification;
-
+    */
 
     /*
     courses
@@ -56,7 +57,5 @@ public class TimedTask {
     @JoinColumn(name = "groups_id" , nullable = false)
     @JsonIgnore
     private Groups groups:
-
-
      */
 }

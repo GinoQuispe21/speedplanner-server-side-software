@@ -36,8 +36,10 @@ public class SimpleTask {
     //Relations
 
     //Notifications
+
     @OneToOne(mappedBy = "simpleTask")
     private Notification notification;
+
 
 
     /*
