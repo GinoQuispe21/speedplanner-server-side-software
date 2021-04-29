@@ -5,7 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
-public interface SimpleTasksService {
+public interface SimpleTaskService {
     Page<SimpleTask> getAllSimpleTasks (Pageable pageable);
     SimpleTask createSimpleTask (SimpleTask simpleTask);
     SimpleTask getSimpleTaskById (Long Id);
