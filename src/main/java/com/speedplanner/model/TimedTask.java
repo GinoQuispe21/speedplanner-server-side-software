@@ -1,8 +1,6 @@
 package com.speedplanner.model;
-
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -37,15 +35,11 @@ public class TimedTask {
     @Size(max = 100)
     private String description;
 
-    //Relations
-
-    //Notifications
-    /*
-    @OneToOne(mappedBy = "timedTask")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "notification_id", referencedColumnName = "id")
     private Notification notification;
-    */
 
-    /*
+    /*TODO:
     courses
     @ManyToOne
     @JoinColumn(name = "course_id" , nullable = false)
