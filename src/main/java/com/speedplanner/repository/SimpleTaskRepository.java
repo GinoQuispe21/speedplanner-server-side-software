@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface SimpleTasksRepository extends JpaRepository<SimpleTask, Long> {
+public interface SimpleTaskRepository extends JpaRepository<SimpleTask, Long> {
 }
