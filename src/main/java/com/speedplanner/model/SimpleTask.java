@@ -1,8 +1,6 @@
 package com.speedplanner.model;
-
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -33,16 +31,11 @@ public class SimpleTask {
     @Lob
     private String description;
 
-    //Relations
-
-    //Notifications
-
-    @OneToOne(mappedBy = "simpleTask")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "notification_id", referencedColumnName = "id")
     private Notification notification;
 
-
-
-    /*
+    /*TODO:
     courses
     @ManyToOne
     @JoinColumn(name = "course_id" , nullable = false)
@@ -53,8 +46,6 @@ public class SimpleTask {
     @ManyToOne
     @JoinColumn(name = "groups_id" , nullable = false)
     @JsonIgnore
-    private Groups groups:
-
-
+    private Groups groups;
      */
 }
