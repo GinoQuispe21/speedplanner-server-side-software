@@ -33,7 +33,7 @@ public class CourseController {
     @Autowired
     private CourseService courseService;
 
-    @Operation(summary = "Get All Courses", description = "Get All Courses from Speedplanner", tags = { "courses" })
+    @Operation(summary = "Get All Courses from a User", description = "Get All Courses by User Id from Speedplanner", tags = { "courses" })
     @GetMapping("/users/{userId}/courses")
     public Page<CourseResource> getAllCoursesByUserId(@PathVariable(name = "userId") Long userId, Pageable pageable) {
         Page<Course> coursePage = courseService.getAllCoursesbyUserId(userId, pageable);
@@ -41,25 +41,25 @@ public class CourseController {
         return new PageImpl<>(resources, pageable, resources.size());
     }
 
-    @Operation(summary = "Get Course by Id", description = "Get a course by his Id from speedplanner", tags = { "courses" })
+    @Operation(summary = "Get one Course from a User", description = "Get a course by User Id and course Id from speedplanner", tags = { "courses" })
     @GetMapping("/users/{userId}/courses/{courseId}")
     public CourseResource getCourseByIdAndUserId(@PathVariable(name = "userId") Long userId, @PathVariable(name = "courseId") Long courseId) {
         return convertToResource(courseService.getCourseByIdAndUserId(userId, courseId));
     }
 
-    @Operation(summary = "Create Course", description = "Create a new course from Speedplanner", tags = { "courses" })
+    @Operation(summary = "Create Course by User", description = "Create a new course by User Id from Speedplanner", tags = { "courses" })
     @PostMapping("/users/{userId}/courses")
     public CourseResource createCourse(@PathVariable(name = "userId") Long userId, @Valid @RequestBody SaveCourseResource resource) {
         return convertToResource(courseService.createCourse(userId, convertToEntity(resource)));
     }
 
-    @Operation(summary = "Update Course", description = "Update a course from Speedplanner", tags = { "courses" })
+    @Operation(summary = "Update Course from User", description = "Update a course by User Id and Course Id from Speedplanner", tags = { "courses" })
     @PutMapping("/users/{userId}/courses/{courseId}")
     public CourseResource updateCourse(@PathVariable(name = "userId") Long userId, @PathVariable(name = "courseId") Long courseId, @Valid @RequestBody SaveCourseResource resource) {
         return convertToResource(courseService.updateCourse(userId, courseId, convertToEntity(resource)));
     }
 
-    @Operation(summary = "Delete Course", description = "Delete a course from Speedplanner", tags = { "courses" })
+    @Operation(summary = "Delete Course from User", description = "Delete a course by User Id and Course Id from Speedplanner", tags = { "courses" })
     @DeleteMapping("/users/{userId}/courses/{courseId}")
     public ResponseEntity<?> deleteCourse(@PathVariable(name = "userId") Long userId, @PathVariable(name = "courseId") Long courseId) {
         return courseService.deleteCourse(userId, courseId);
