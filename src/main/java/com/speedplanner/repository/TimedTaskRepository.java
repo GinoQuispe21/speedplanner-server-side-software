@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TimedTasksRepository extends JpaRepository<TimedTask, Long> {
+public interface TimedTaskRepository extends JpaRepository<TimedTask, Long> {
 }
