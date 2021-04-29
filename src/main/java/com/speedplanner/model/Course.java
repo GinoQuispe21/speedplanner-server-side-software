@@ -31,4 +31,9 @@ public class Course {
     @Size(max = 30)
     private String email;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
+    private User user;
+
 }

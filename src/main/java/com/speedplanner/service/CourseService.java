@@ -6,9 +6,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
 public interface CourseService {
-    ResponseEntity<?> deleteCourse(Long courseId);
-    Course updateCourse(Long courseId, Course courseRequest);
-    Course createCourse(Course course);
-    Course getCourseById(Long courseId);
-    Page<Course> getAllCourses(Pageable pageable);
+    ResponseEntity<?> deleteCourse(Long userId, Long courseId);
+    Course updateCourse(Long userId, Long courseId, Course courseDetail);
+    Course createCourse(Long userId, Course course);
+    Course getCourseByIdAndUserId(Long userId, Long courseId);
+    Page<Course> getAllCoursesbyUserId(Long userId, Pageable pageable);
 }
