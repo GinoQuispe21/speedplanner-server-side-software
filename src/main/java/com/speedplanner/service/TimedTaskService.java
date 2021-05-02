@@ -5,7 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
-public interface TimedTasksService {
+public interface TimedTaskService {
     Page<TimedTask> getAllTimedTasks (Pageable pageable);
     TimedTask createTimedTask (TimedTask TimedTask);
     TimedTask getTimedTaskById (Long Id);

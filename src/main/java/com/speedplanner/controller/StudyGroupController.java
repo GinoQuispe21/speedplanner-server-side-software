@@ -1,8 +1,8 @@
 package com.speedplanner.controller;
 
 import com.speedplanner.model.StudyGroup;
-import com.speedplanner.resource.GroupResource;
-import com.speedplanner.resource.SaveGroupResource;
+import com.speedplanner.resource.StudyGroupResource;
+import com.speedplanner.resource.SaveStudyGroupResource;
 import com.speedplanner.service.StudyGroupService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -32,9 +32,9 @@ public class StudyGroupController {
     @Operation(summary = "Get all Study Groups", description = "Gets all the Study Groups from Speedplanner",
             tags = { "study groups" })
     @GetMapping("/studyGroups")
-    public Page<GroupResource> getAllGroups(Pageable pageable) {
+    public Page<StudyGroupResource> getAllGroups(Pageable pageable) {
         Page<StudyGroup> groupPage = studyGroupService.getAllStudyGroups(pageable);
-        List<GroupResource> resources = groupPage.getContent().stream().map(this::convertToResource).collect(Collectors.toList());
+        List<StudyGroupResource> resources = groupPage.getContent().stream().map(this::convertToResource).collect(Collectors.toList());
 
         return new PageImpl<>(resources, pageable, resources.size());
     }
@@ -43,13 +43,13 @@ public class StudyGroupController {
             "given its Id.",
             tags = { "study groups" })
     @GetMapping("/studyGroups/{id}")
-    public GroupResource getGroupById(@PathVariable(name = "id") Long studyGroupId) {
+    public StudyGroupResource getGroupById(@PathVariable(name = "id") Long studyGroupId) {
         return convertToResource(studyGroupService.getStudyGroupById(studyGroupId));
     }
 
     @Operation(summary = "Create a new Study Group", description = "Creates a new Study Group", tags = { "study groups" })
     @PostMapping("/studyGroups")
-    public GroupResource createGroup(@Valid @RequestBody SaveGroupResource resource)  {
+    public StudyGroupResource createGroup(@Valid @RequestBody SaveStudyGroupResource resource)  {
         StudyGroup studyGroup = convertToEntity(resource);
         return convertToResource(studyGroupService.createStudyGroup(studyGroup));
     }
@@ -57,7 +57,7 @@ public class StudyGroupController {
     @Operation(summary = "Update a Study Group", description = "Updates a particular Study Group, given its Id.",
             tags = { "study groups" })
     @PutMapping("/studyGroups/{id}")
-    public GroupResource updateGroup(@PathVariable(name = "id") Long studyGroupId, @Valid @RequestBody SaveGroupResource resource) {
+    public StudyGroupResource updateGroup(@PathVariable(name = "id") Long studyGroupId, @Valid @RequestBody SaveStudyGroupResource resource) {
         StudyGroup studyGroup = convertToEntity(resource);
         return convertToResource(studyGroupService.updateStudyGroup(studyGroupId, studyGroup));
     }
@@ -69,7 +69,7 @@ public class StudyGroupController {
         return studyGroupService.deleteStudyGroup(studyGroupId);
     }
 
-    private StudyGroup convertToEntity(SaveGroupResource resource) { return mapper.map(resource, StudyGroup.class); }
+    private StudyGroup convertToEntity(SaveStudyGroupResource resource) { return mapper.map(resource, StudyGroup.class); }
 
-    private GroupResource convertToResource(StudyGroup entity) { return mapper.map(entity, GroupResource.class); }
+    private StudyGroupResource convertToResource(StudyGroup entity) { return mapper.map(entity, StudyGroupResource.class); }
 }

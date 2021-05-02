@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class NotificationsResource{
+public class NotificationResource {
     private Long id;
     private String message;
     private Date reminder_date;

@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 
-public class SaveGroupResource {
+public class SaveStudyGroupResource {
     @NotBlank
     @NotNull
     @Column(unique = true)
