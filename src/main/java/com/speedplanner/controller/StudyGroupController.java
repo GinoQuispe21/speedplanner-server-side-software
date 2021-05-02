@@ -42,14 +42,16 @@ public class StudyGroupController {
     @Operation(summary = "Get a Study Group by Id and Course Id.", description = "Gets the information of a particular" +
             " Study Group, given its Id and the related Course Id." +
             "given its Id.",
-            tags = { "study groups" })
+            tags = { "study groups", "courses" })
     @GetMapping("/courses/{courseId}/studyGroups/{id}")
     public StudyGroupResource getStudyGroupByIdAndCourseId(@PathVariable(name = "id") Long studyGroupId,
                                                            @PathVariable(name = "courseId") Long courseId) {
         return convertToResource(studyGroupService.getStudyGroupByIdAndCourseId(studyGroupId, courseId));
     }
 
-    @Operation(summary = "Create a new Study Group", description = "Creates a new Study Group", tags = { "study groups" })
+    @Operation(summary = "Create a new Study Group", description = "Creates a new Study Group, given the " +
+            "corresponding Id of the related Course.",
+            tags = { "study groups", "courses" })
     @PostMapping("/courses/{courseId}/studyGroups")
     public StudyGroupResource createStudyGroup(@Valid @RequestBody SaveStudyGroupResource resource,
                                                @PathVariable(name = "courseId") Long courseId)  {
@@ -57,8 +59,9 @@ public class StudyGroupController {
         return convertToResource(studyGroupService.createStudyGroup(courseId, studyGroup));
     }
 
-    @Operation(summary = "Update a Study Group", description = "Updates a particular Study Group, given its Id.",
-            tags = { "study groups" })
+    @Operation(summary = "Update a Study Group", description = "Updates a particular Study Group, given its Id, and " +
+            "its related Course Id.",
+            tags = { "study groups", "courses" })
     @PutMapping("/courses/{courseId}/studyGroups/{id}")
     public StudyGroupResource updateStudyGroup(@PathVariable(name = "id") Long studyGroupId,
                                                @PathVariable(name = "courseId") Long courseId,
@@ -67,8 +70,9 @@ public class StudyGroupController {
         return convertToResource(studyGroupService.updateStudyGroup(courseId, studyGroupId, studyGroup));
     }
 
-    @Operation(summary = "Delete a Study Group", description = "Deletes a Study Group, given its Id.",
-            tags = { "study groups" })
+    @Operation(summary = "Delete a Study Group", description = "Deletes a Study Group, given its Id and its related" +
+            "Course Id.",
+            tags = { "study groups", "courses" })
     @DeleteMapping("/courses/{courseId}/studyGroups/{id}")
     public ResponseEntity<?> deleteStudyGroup(@PathVariable(name = "id") Long studyGroupId,
                                               @PathVariable(name = "courseId") Long courseId) {
