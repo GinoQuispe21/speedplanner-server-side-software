@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
-
+//TODO: Update doc.
 @RestController
 @CrossOrigin
 @RequestMapping("/api")
@@ -32,41 +32,51 @@ public class StudyGroupController {
     @Operation(summary = "Get all Study Groups", description = "Gets all the Study Groups from Speedplanner",
             tags = { "study groups" })
     @GetMapping("/studyGroups")
-    public Page<StudyGroupResource> getAllGroups(Pageable pageable) {
+    public Page<StudyGroupResource> getAllStudyGroups(Pageable pageable) {
         Page<StudyGroup> groupPage = studyGroupService.getAllStudyGroups(pageable);
         List<StudyGroupResource> resources = groupPage.getContent().stream().map(this::convertToResource).collect(Collectors.toList());
 
         return new PageImpl<>(resources, pageable, resources.size());
     }
 
-    @Operation(summary = "Get a Study Group by Id.", description = "Gets the information of a particular Study Group, " +
+    @Operation(summary = "Get a Study Group by Id and Course Id.", description = "Gets the information of a particular" +
+            " Study Group, given its Id and the related Course Id." +
             "given its Id.",
-            tags = { "study groups" })
-    @GetMapping("/studyGroups/{id}")
-    public StudyGroupResource getGroupById(@PathVariable(name = "id") Long studyGroupId) {
-        return convertToResource(studyGroupService.getStudyGroupById(studyGroupId));
+            tags = { "study groups", "courses" })
+    @GetMapping("/courses/{courseId}/studyGroups/{id}")
+    public StudyGroupResource getStudyGroupByIdAndCourseId(@PathVariable(name = "id") Long studyGroupId,
+                                                           @PathVariable(name = "courseId") Long courseId) {
+        return convertToResource(studyGroupService.getStudyGroupByIdAndCourseId(studyGroupId, courseId));
     }
 
-    @Operation(summary = "Create a new Study Group", description = "Creates a new Study Group", tags = { "study groups" })
-    @PostMapping("/studyGroups")
-    public StudyGroupResource createGroup(@Valid @RequestBody SaveStudyGroupResource resource)  {
+    @Operation(summary = "Create a new Study Group", description = "Creates a new Study Group, given the " +
+            "corresponding Id of the related Course.",
+            tags = { "study groups", "courses" })
+    @PostMapping("/courses/{courseId}/studyGroups")
+    public StudyGroupResource createStudyGroup(@Valid @RequestBody SaveStudyGroupResource resource,
+                                               @PathVariable(name = "courseId") Long courseId)  {
         StudyGroup studyGroup = convertToEntity(resource);
-        return convertToResource(studyGroupService.createStudyGroup(studyGroup));
+        return convertToResource(studyGroupService.createStudyGroup(courseId, studyGroup));
     }
 
-    @Operation(summary = "Update a Study Group", description = "Updates a particular Study Group, given its Id.",
-            tags = { "study groups" })
-    @PutMapping("/studyGroups/{id}")
-    public StudyGroupResource updateGroup(@PathVariable(name = "id") Long studyGroupId, @Valid @RequestBody SaveStudyGroupResource resource) {
+    @Operation(summary = "Update a Study Group", description = "Updates a particular Study Group, given its Id, and " +
+            "its related Course Id.",
+            tags = { "study groups", "courses" })
+    @PutMapping("/courses/{courseId}/studyGroups/{id}")
+    public StudyGroupResource updateStudyGroup(@PathVariable(name = "id") Long studyGroupId,
+                                               @PathVariable(name = "courseId") Long courseId,
+                                               @Valid @RequestBody SaveStudyGroupResource resource) {
         StudyGroup studyGroup = convertToEntity(resource);
-        return convertToResource(studyGroupService.updateStudyGroup(studyGroupId, studyGroup));
+        return convertToResource(studyGroupService.updateStudyGroup(courseId, studyGroupId, studyGroup));
     }
 
-    @Operation(summary = "Delete a Study Group", description = "Deletes a Study Group, given its Id.",
-            tags = { "study groups" })
-    @DeleteMapping("/studyGroups/{id}")
-    public ResponseEntity<?> deleteGroup(@PathVariable(name = "id") Long studyGroupId) {
-        return studyGroupService.deleteStudyGroup(studyGroupId);
+    @Operation(summary = "Delete a Study Group", description = "Deletes a Study Group, given its Id and its related" +
+            "Course Id.",
+            tags = { "study groups", "courses" })
+    @DeleteMapping("/courses/{courseId}/studyGroups/{id}")
+    public ResponseEntity<?> deleteStudyGroup(@PathVariable(name = "id") Long studyGroupId,
+                                              @PathVariable(name = "courseId") Long courseId) {
+        return studyGroupService.deleteStudyGroup(courseId, studyGroupId);
     }
 
     private StudyGroup convertToEntity(SaveStudyGroupResource resource) { return mapper.map(resource, StudyGroup.class); }
