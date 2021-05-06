@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface StudyGroupRepository extends JpaRepository<StudyGroup, Long> {
-    StudyGroup findByName(String studyGroupName);
     Page<StudyGroup> findAllByCourseId(Pageable pageable, Long courseId);
     StudyGroup findByIdAndCourseId(Long studyGroupId, Long courseId);
 }
