@@ -44,8 +44,8 @@ public class TimedTask {
     private Notification notification;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "course_id" , nullable = false)
+    @JoinColumn(name = "study_group_id" , nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
-    private Course course;
+    private StudyGroup studyGroup;
 }
