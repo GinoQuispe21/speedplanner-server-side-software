@@ -24,10 +24,10 @@ public class TimedTask {
     private boolean finished;
 
     @Column(nullable = false)
-    private Date start_time;
+    private Date startTime;
 
     @Column(nullable = false)
-    private Date finish_time;
+    private Date finishTime;
 
     @NotNull
     @NotBlank
