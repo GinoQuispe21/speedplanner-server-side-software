@@ -19,6 +19,8 @@ public class SimpleTaskServiceImpl implements SimpleTaskService {
     @Autowired
     private StudyGroupRepository studyGroupRepository;
 
+    //TODO: Task and StudyGroup Logic
+
     @Override
     public Page<SimpleTask> getAllSimpleTasksByStudyGroupId(Long studyGroupId, Pageable pageable) {
         this.ValidateStudyGroup(studyGroupId);
@@ -36,7 +38,7 @@ public class SimpleTaskServiceImpl implements SimpleTaskService {
         return studyGroupRepository.findById(studyGroupId).map(studyGroup -> {
             simpleTask.setStudyGroup(studyGroup);
             return simpleTaskRepository.save(simpleTask);
-        }).orElseThrow(() -> new ResourceNotFoundException("StudyGroup not found with Id: "+studyGroupId));
+        }).orElseThrow(() -> new ResourceNotFoundException("Study Group not found with Id: "+studyGroupId));
     }
 
     @Override
@@ -49,7 +51,7 @@ public class SimpleTaskServiceImpl implements SimpleTaskService {
             simpleTask.setTitle(simpleTaskRequest.getTitle());
             simpleTask.setDescription(simpleTaskRequest.getDescription());
             return simpleTaskRepository.save(simpleTask);
-        }).orElseThrow(() -> new ResourceNotFoundException("StudyGroup not found with Id: "+studyGroupId));
+        }).orElseThrow(() -> new ResourceNotFoundException("Study Group not found with Id: "+studyGroupId));
     }
 
     @Override
@@ -59,13 +61,13 @@ public class SimpleTaskServiceImpl implements SimpleTaskService {
                     new ResourceNotFoundException("Simple Task", "Id", simpleTaskId));
             simpleTaskRepository.delete(simpleTask);
             return ResponseEntity.ok().build();
-        }).orElseThrow(() -> new ResourceNotFoundException("StudyGroup not found with Id: "+studyGroupId));
+        }).orElseThrow(() -> new ResourceNotFoundException("Study Group not found with Id: "+studyGroupId));
     }
 
     //Revisar que un study group exista, evita repetición de código
     public void ValidateStudyGroup(Long studyGroupId){
         if (!studyGroupRepository.existsById(studyGroupId))
-            throw new ResourceNotFoundException("StudyGroup", "Id", studyGroupId);
+            throw new ResourceNotFoundException("Study Group", "Id", studyGroupId);
     }
 
 
