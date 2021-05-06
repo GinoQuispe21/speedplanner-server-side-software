@@ -46,10 +46,5 @@ public class TimedTask {
     @JsonIgnore
     private Course course;
 
-    groups
-    @ManyToOne
-    @JoinColumn(name = "groups_id" , nullable = false)
-    @JsonIgnore
-    private Groups groups:
      */
 }
