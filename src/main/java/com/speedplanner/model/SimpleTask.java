@@ -43,6 +43,6 @@ public class SimpleTask {
     @JoinColumn(name = "course_id" , nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
-    private Course course;
+    private StudyGroup studyGroup;
 
 }

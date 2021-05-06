@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SimpleTaskRepository extends JpaRepository<SimpleTask, Long> {
-    SimpleTask findByIdAndCourseId(Long id, Long courseId);
-    Page<SimpleTask> findAllByCourseId(Long courseId, Pageable pageable);
+    SimpleTask findByIdAndStudyGroupId(Long id, Long studyGroupId);
+    Page<SimpleTask> findAllByStudyGroupId(Long studyGroupId, Pageable pageable);
 }
