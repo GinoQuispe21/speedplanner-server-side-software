@@ -6,9 +6,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
 public interface SimpleTaskService {
-    Page<SimpleTask> getAllSimpleTasks (Pageable pageable);
-    SimpleTask createSimpleTask (SimpleTask simpleTask);
-    SimpleTask getSimpleTaskById (Long Id);
-    SimpleTask updateSimpleTask (Long simpleTaskId , SimpleTask simpleTaskRequest);
-    ResponseEntity<?> deleteSimpleTask (Long simpleTaskId);
+    Page<SimpleTask> getAllSimpleTasksByCourseId (Long courseId, Pageable pageable);
+    SimpleTask createSimpleTask (Long courseId, SimpleTask simpleTask);
+    SimpleTask getSimpleTaskByIdAndCourseId (Long courseId, Long Id);
+    SimpleTask updateSimpleTask (Long courseId, Long simpleTaskId , SimpleTask simpleTaskRequest);
+    ResponseEntity<?> deleteSimpleTask (Long courseId, Long simpleTaskId);
 }
