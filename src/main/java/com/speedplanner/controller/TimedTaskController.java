@@ -30,8 +30,9 @@ public class TimedTaskController {
     @Autowired
     private TimedTaskService timedTaskService;
 
-    @Operation(summary = "Get all Timed Tasks", description = "Gets all the Timed Tasks from Speedplanner",
-            tags = { "timed tasks" })
+    @Operation(summary = "Get all Timed Tasks", description = "Gets all the Timed Tasks for a specified Study Group, " +
+            "given its Id.",
+            tags = { "timed tasks", "study groups" })
     @GetMapping("/studyGroups/{studyGroupId}/timedTasks")
     public Page<TimedTasksResource> getAllTimedTasksByStudyGroupId(@PathVariable(name = "studyGroupId") Long studyGroupId,
                                                                    Pageable pageable) {
@@ -42,14 +43,16 @@ public class TimedTaskController {
     }
 
     @Operation(summary = "Get a Timed Task by Id", description = "Gets the information of a particular Timed Task, " +
-            "given its Id", tags = { "timed tasks" })
+            "given its Id and its corresponding Study Group Id.", tags = { "timed tasks", "study groups" })
     @GetMapping("/studyGroups/{studyGroupId}/timedTasks/{id}")
     public TimedTasksResource getTimedTaskById(@PathVariable(name = "studyGroupId") Long studyGroupId,
                                                @PathVariable(name = "id") Long timedTaskId){
         return convertToResource(timedTaskService.getTimedTaskByIdAndStudyGroupId(studyGroupId, timedTaskId));
     }
 
-    @Operation(summary = "Create a Timed Task", description = "Creates a new Timed Task", tags = { "timed tasks" })
+    @Operation(summary = "Create a Timed Task", description = "Creates a new Timed Task for a specified Study " +
+            "Group, given its Id.",
+            tags = { "timed tasks", "study groups" })
     @PostMapping("/studyGroups/{studyGroupId}/timedTasks")
     public TimedTasksResource createTimedTask(@PathVariable(name = "studyGroupId") Long studyGroupId,
                                               @Valid @RequestBody SaveTimedTasksResource resource){
@@ -57,8 +60,9 @@ public class TimedTaskController {
         return convertToResource(timedTaskService.createTimedTask(studyGroupId, timedTask));
     }
 
-    @Operation(summary = "Update a  Timed Task", description = "Updates a particular Timed Task, given its Id.",
-            tags = { "timed tasks" })
+    @Operation(summary = "Update a  Timed Task", description = "Updates a particular Timed Task, given its Id and " +
+            "its corresponding Study Group Id.",
+            tags = { "timed tasks", "study groups" })
     @PutMapping("/studyGroups/{studyGroupId}/timedTasks/{id}")
     public TimedTasksResource updateTimedTask(@PathVariable(name = "studyGroupId") Long studyGroupId,
                                               @PathVariable(name = "id") Long timedTaskId,
@@ -67,8 +71,9 @@ public class TimedTaskController {
         return convertToResource(timedTaskService.updateTimedTask(studyGroupId, timedTaskId , timedTask));
     }
 
-    @Operation(summary = "Delete a Timed Task", description = "Deletes a Timed Task, given its Id.",
-            tags = { "timed tasks" })
+    @Operation(summary = "Delete a Timed Task", description = "Deletes a Timed Task, given its Id, and its " +
+            "corresponding Study Group Id.",
+            tags = { "timed tasks", "study groups" })
     @DeleteMapping("/studyGroups/{studyGroupId}/timedTasks/{id}")
     public ResponseEntity<?> deleteTimedTask(@PathVariable(name = "studyGroupId") Long studyGroupId,
                                              @PathVariable(name = "id") Long timedTaskId){
