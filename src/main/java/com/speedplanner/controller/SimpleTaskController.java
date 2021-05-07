@@ -32,9 +32,6 @@ public class SimpleTaskController {
     @Autowired
     private SimpleTaskService simpleTaskService;
     
-    @Autowired
-    private StudyGroupService studyGroupService;
-
     @Operation(summary = "Get all Simple Tasks", description = "Gets all the Simple Tasks for a specified Study " +
             "Group, given its Id.",
             tags = { "simple tasks", "study groups" })
