@@ -8,11 +8,11 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class TimedTasksResource {
+public class TimedTaskResource {
     private Long id;
     private boolean finished;
-    private Date start_time;
-    private Date finish_time;
+    private Date startTime;
+    private Date finishTime;
     private String title;
     private String description;
 }

@@ -12,25 +12,19 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class SaveTimedTasksResource {
-
+public class SaveSimpleTaskResource {
     @NotNull
     private boolean finished;
 
-    @Column(nullable = false)
-    private Date start_time;
-
-    @Column(nullable = false)
-    private Date finish_time;
-
     @NotNull
-    @NotBlank
-    @Size(max = 30)
-    private String title;
+    private Date deadline;
 
     @NotNull
     @NotBlank
     @Size(max = 100)
-    private String description;
+    private String title;
 
+    @NotNull
+    @Lob
+    private String description;
 }
