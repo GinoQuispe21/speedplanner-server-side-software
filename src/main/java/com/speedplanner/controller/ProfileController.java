@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/users/{userId}")
 @Tag(name = "Profiles", description = "User API")
