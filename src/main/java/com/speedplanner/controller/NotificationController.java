@@ -40,7 +40,8 @@ public class NotificationController {
     }
 
     @Operation(summary = "Gets a notification",
-            description = "Gets the information of a particular notification, given its Id.", tags = { "notifications" })
+            description = "Gets the information of a particular notification, given its Id and its " +
+                    "corresponding Simple Task Id.", tags = { "notifications" })
     @GetMapping("/simpleTasks/{simpleTaskId}/notifications/{id}")
     public NotificationResource getNotificationByIdAndSimpleTaskId(@PathVariable(name = "id") Long notificationId,
                                                                    @PathVariable(name = "simpleTaskId") Long simpleTaskId){
@@ -48,7 +49,8 @@ public class NotificationController {
     }
 
     @Operation(summary = "Gets a notification",
-            description = "Gets the information of a particular notification, given its Id.", tags = { "notifications" })
+            description = "Gets the information of a particular notification, given its Id and its corresponding" +
+                    " Timed Task Id.", tags = { "notifications", "timed tasks" })
     @GetMapping("/timedTasks/{timedTaskId}/notifications/{id}")
     public NotificationResource getNotificationByIdAndTimedTaskId(@PathVariable(name = "id") Long notificationId,
                                                                   @PathVariable(name = "timedTaskId") Long timedTaskId){
@@ -56,7 +58,7 @@ public class NotificationController {
     }
 
     @Operation(summary = "Create a notification", description = "Creates a new notification, related to an existing" +
-            "Simple Task",
+            "Simple Task, given its Id.",
             tags = { "notifications", "simple tasks" })
     @PostMapping("/simpleTasks/{simpleTaskId}/notifications")
     public NotificationResource createSimpleNotification(@PathVariable(name = "simpleTaskId") Long simpleTaskId,
@@ -66,8 +68,8 @@ public class NotificationController {
     }
 
     @Operation(summary = "Create a notification", description = "Creates a new notification, related to an existing" +
-            "Timed Task",
-            tags = { "notifications", "simple tasks" })
+            "Timed Task, given its Id.",
+            tags = { "notifications", "timed tasks" })
     @PostMapping("/timedTasks/{timedTaskId}/notifications")
     public NotificationResource createTimedNotification(@PathVariable(name = "timedTaskId") Long timedTaskId,
                                                         @Valid @RequestBody SaveNotificationsResource resource){
@@ -76,7 +78,8 @@ public class NotificationController {
     }
 
     @Operation(summary = "Update a notification.",
-            description = "Updates a notification related to a Simple Task", tags = { "notifications", "simple tasks" })
+            description = "Updates a notification related to a Simple Task, given both Ids.",
+            tags = { "notifications", "simple tasks" })
     @PutMapping("/simpleTasks/{simpleTaskId}/notifications/{id}")
     public NotificationResource updateSimpleNotification(@PathVariable(name = "id") Long id,
                                                          @PathVariable(name = "simpleTaskId") Long simpleTaskId,
@@ -85,7 +88,7 @@ public class NotificationController {
     }
 
     @Operation(summary = "Update a notification.",
-            description = "Updates a notification related to a Simple Task", tags = { "notifications", "simple tasks" })
+            description = "Updates a notification related to a Timed Task, given both Ids.", tags = { "notifications", "timed tasks" })
     @PutMapping("/timedTasks/{timedTaskId}/notifications/{id}")
     public NotificationResource updateTimedNotification(@PathVariable(name = "id") Long id,
                                                         @PathVariable(name = "timedTaskId") Long timedTaskId,

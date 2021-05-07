@@ -1,8 +1,8 @@
 package com.speedplanner.controller;
 
 import com.speedplanner.model.SimpleTask;
-import com.speedplanner.resource.SaveSimpleTasksResource;
-import com.speedplanner.resource.SimpleTasksResource;
+import com.speedplanner.resource.SaveSimpleTaskResource;
+import com.speedplanner.resource.SimpleTaskResource;
 import com.speedplanner.service.SimpleTaskService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -30,47 +30,59 @@ public class SimpleTaskController {
 
     @Autowired
     private SimpleTaskService simpleTaskService;
-
-    @Operation(summary = "Get all Simple Tasks", description = "Gets all the Simple Tasks from Speedplanner",
-            tags = { "simple tasks" })
-    @GetMapping("/simpleTasks")
-    public Page<SimpleTasksResource> getAllSimpleTasks(Pageable pageable) {
-        Page<SimpleTask> simpleTaskPage = simpleTaskService.getAllSimpleTasks(pageable);
-        List<SimpleTasksResource> resources = simpleTaskPage.getContent().stream().map(this::convertToResource).collect(Collectors.toList());
-
+    
+    @Operation(summary = "Get all Simple Tasks", description = "Gets all the Simple Tasks for a specified Study " +
+            "Group, given its Id.",
+            tags = { "simple tasks", "study groups" })
+    @GetMapping("/studyGroups/{studyGroupId}/simpleTasks")
+    public Page<SimpleTaskResource> getAllSimpleTasksByStudyGroupId(@PathVariable(name = "studyGroupId") Long studyGroupId,
+                                                                    Pageable pageable) {
+        Page<SimpleTask> simpleTaskPage = simpleTaskService.getAllSimpleTasksByStudyGroupId(studyGroupId,pageable);
+        List<SimpleTaskResource> resources = simpleTaskPage.getContent().stream()
+                .map(this::convertToResource).collect(Collectors.toList());
         return new PageImpl<>(resources , pageable , resources.size());
     }
 
-    @Operation(summary = "Get a Simple Task by Id.", description = "Gets a particular Simple Task, given its Id.",
-            tags = { "simple tasks" })
-    @GetMapping("/simpleTasks/{id}")
-    public SimpleTasksResource getSimpleTaskById(@PathVariable(name = "id") Long simpleTaskId){
-        return convertToResource(simpleTaskService.getSimpleTaskById(simpleTaskId));
+    @Operation(summary = "Get a Simple Task by Id.", description = "Gets a particular Simple Task, given its Id and" +
+            " its corresponding Study Group Id..",
+            tags = { "simple tasks", "study groups" })
+    @GetMapping("/studyGroups/{studyGroupId}/simpleTasks/{id}")
+    public SimpleTaskResource getSimpleTaskById(@PathVariable(name = "studyGroupId") Long studyGroupId,
+                                                @PathVariable(name = "id") Long simpleTaskId){
+        return convertToResource(simpleTaskService.getSimpleTaskByIdAndStudyGroupId(studyGroupId, simpleTaskId));
     }
 
-    @Operation(summary = "Create a Simple Task", description = "Creates a new Simple Task.", tags = { "simple tasks" })
-    @PostMapping("/simpleTasks")
-    public SimpleTasksResource createSimpleTask(@Valid @RequestBody SaveSimpleTasksResource resource){
+    @Operation(summary = "Create a Simple Task", description = "Creates a new Simple Task given its" +
+            "corresponding Study Group Id.",
+            tags = { "simple tasks", "study groups" })
+    @PostMapping("/studyGroups/{studyGroupId}/simpleTasks")
+    public SimpleTaskResource createSimpleTask(@PathVariable(name = "studyGroupId") Long studyGroupId,
+                                               @Valid @RequestBody SaveSimpleTaskResource resource){
         SimpleTask simpleTask = convertToEntity(resource);
-        return convertToResource(simpleTaskService.createSimpleTask(simpleTask));
+        return convertToResource(simpleTaskService.createSimpleTask(studyGroupId, simpleTask));
     }
 
-    @Operation(summary = "Update a Simple Task.", description = "Updates a Simple Task given its Id.",
-            tags = { "simple tasks" })
-    @PutMapping("/simpleTasks/{id}")
-    public SimpleTasksResource updateSimpleTask(@PathVariable(name = "id") Long simpleTaskId, @Valid @RequestBody SaveSimpleTasksResource resource){
+    @Operation(summary = "Update a Simple Task.", description = "Updates a Simple Task given its Id and its" +
+            "corresponding Study Group Id.",
+            tags = { "simple tasks", "study groups" })
+    @PutMapping("/studyGroups/{studyGroupId}/simpleTasks/{id}")
+    public SimpleTaskResource updateSimpleTask(@PathVariable(name = "studyGroupId") Long studyGroupId,
+                                               @PathVariable(name = "id") Long simpleTaskId,
+                                               @Valid @RequestBody SaveSimpleTaskResource resource){
         SimpleTask simpleTask = convertToEntity(resource);
-        return convertToResource(simpleTaskService.updateSimpleTask(simpleTaskId , simpleTask));
+        return convertToResource(simpleTaskService.updateSimpleTask(studyGroupId, simpleTaskId, simpleTask));
     }
 
-    @Operation(summary = "Delete a Simple Task", description = "Deletes a Simple Task, given its Id.",
-            tags = { "simple tasks" })
-    @DeleteMapping("/simpleTasks/{id}")
-    public ResponseEntity<?> deleteSimpleTask(@PathVariable(name = "id") Long simpleTaskId){
-        return simpleTaskService.deleteSimpleTask(simpleTaskId);
+    @Operation(summary = "Delete a Simple Task", description = "Deletes a Simple Task, given its Id and its" +
+            "corresponding Study Group Id.",
+            tags = { "simple tasks", "study groups" })
+    @DeleteMapping("/studyGroups/{studyGroupId}/simpleTasks/{id}")
+    public ResponseEntity<?> deleteSimpleTask(@PathVariable(name = "studyGroupId") Long studyGroupId,
+                                              @PathVariable(name = "id") Long simpleTaskId){
+        return simpleTaskService.deleteSimpleTask(studyGroupId, simpleTaskId);
     }
 
-    private SimpleTask convertToEntity(SaveSimpleTasksResource resource) {return mapper.map(resource , SimpleTask.class); }
+    private SimpleTask convertToEntity(SaveSimpleTaskResource resource) {return mapper.map(resource , SimpleTask.class); }
 
-    private SimpleTasksResource convertToResource(SimpleTask entity) { return mapper.map(entity, SimpleTasksResource.class); }
+    private SimpleTaskResource convertToResource(SimpleTask entity) { return mapper.map(entity, SimpleTaskResource.class); }
 }

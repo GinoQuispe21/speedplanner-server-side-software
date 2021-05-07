@@ -1,6 +1,10 @@
 package com.speedplanner.model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -19,11 +23,11 @@ public class TimedTask {
     @NotNull
     private boolean finished;
 
-    @Column(nullable = false)
-    private Date start_time;
+    @NotNull
+    private Date startTime;
 
-    @Column(nullable = false)
-    private Date finish_time;
+    @NotNull
+    private Date finishTime;
 
     @NotNull
     @NotBlank
@@ -39,17 +43,9 @@ public class TimedTask {
     @JoinColumn(name = "notification_id", referencedColumnName = "id")
     private Notification notification;
 
-    /*TODO:
-    courses
-    @ManyToOne
-    @JoinColumn(name = "course_id" , nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "study_group_id" , nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
-    private Course course;
-
-    groups
-    @ManyToOne
-    @JoinColumn(name = "groups_id" , nullable = false)
-    @JsonIgnore
-    private Groups groups:
-     */
+    private StudyGroup studyGroup;
 }
