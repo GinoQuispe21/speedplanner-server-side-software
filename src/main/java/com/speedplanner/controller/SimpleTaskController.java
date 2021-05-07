@@ -42,7 +42,8 @@ public class SimpleTaskController {
     public Page<SimpleTasksResource> getAllSimpleTasksByStudyGroupId(@PathVariable(name = "studyGroupId") Long studyGroupId,
                                                                      Pageable pageable) {
         Page<SimpleTask> simpleTaskPage = simpleTaskService.getAllSimpleTasksByStudyGroupId(studyGroupId,pageable);
-        List<SimpleTasksResource> resources = simpleTaskPage.getContent().stream().map(this::convertToResource).collect(Collectors.toList());
+        List<SimpleTasksResource> resources = simpleTaskPage.getContent().stream()
+                .map(this::convertToResource).collect(Collectors.toList());
         return new PageImpl<>(resources , pageable , resources.size());
     }
 
