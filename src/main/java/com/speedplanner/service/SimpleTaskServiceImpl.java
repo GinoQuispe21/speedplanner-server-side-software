@@ -19,8 +19,6 @@ public class SimpleTaskServiceImpl implements SimpleTaskService {
     @Autowired
     private StudyGroupRepository studyGroupRepository;
 
-    //TODO: Task and StudyGroup Logic
-
     @Override
     public Page<SimpleTask> getAllSimpleTasksByStudyGroupId(Long studyGroupId, Pageable pageable) {
         this.ValidateStudyGroup(studyGroupId);

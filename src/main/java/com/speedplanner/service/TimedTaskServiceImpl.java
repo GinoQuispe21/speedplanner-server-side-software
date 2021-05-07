@@ -19,8 +19,6 @@ public class TimedTaskServiceImpl implements TimedTaskService {
     @Autowired
     private StudyGroupRepository studyGroupRepository;
 
-    //TODO: Task and StudyGroup Logic
-
     @Override
     public Page<TimedTask> getAllTimedTasksByStudyGroupId(Long studyGroupId, Pageable pageable) {
         this.ValidateStudyGroup(studyGroupId);
