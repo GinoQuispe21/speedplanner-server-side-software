@@ -2,7 +2,9 @@ package com.speedplanner.service;
 
 import com.speedplanner.exception.ResourceNotFoundException;
 import com.speedplanner.model.Course;
+import com.speedplanner.model.StudyGroup;
 import com.speedplanner.repository.CourseRepository;
+import com.speedplanner.repository.StudyGroupRepository;
 import com.speedplanner.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,6 +20,9 @@ public class CourseServiceImpl implements CourseService{
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private StudyGroupRepository studyGroupRepository;
 
     @Override
     public ResponseEntity<?> deleteCourse(Long userId, Long courseId) {
@@ -45,8 +50,18 @@ public class CourseServiceImpl implements CourseService{
     public Course createCourse(Long userId, Course course) {
         return userRepository.findById(userId).map(user -> {
             course.setUser(user);
+            StudyGroup studyGroup = new StudyGroup();
+            studyGroup.setCourse(course);
+            studyGroup.setName("Grupo personal");
+            studyGroup.setDescription("Grupo para uso personal de: "+user.getProfile().getFullName());
+            studyGroupRepository.save(studyGroup);
             return courseRepository.save(course);
         }).orElseThrow(() -> new ResourceNotFoundException("User", "Id", userId));
+    }
+
+
+    public void AssignStudyGroup(Long userId, Long courseId){
+
     }
 
     @Override

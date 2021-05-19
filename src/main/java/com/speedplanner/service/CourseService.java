@@ -1,6 +1,7 @@
 package com.speedplanner.service;
 
 import com.speedplanner.model.Course;
+import com.speedplanner.model.StudyGroup;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
