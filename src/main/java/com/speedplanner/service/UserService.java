@@ -13,4 +13,5 @@ public interface UserService {
     User updateUser(Long userId, User userRequest);
     ResponseEntity<?> deleteUser(Long userId);
     User setUserProfile(Long userId, Profile profile);
+
 }

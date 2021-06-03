@@ -6,11 +6,12 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "users")
 @Data
-public class User {
+public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,6 +25,8 @@ public class User {
     @NotNull
     @Size(max = 30)
     private String password;
+
+    private String role;
 
     @NotBlank
     @NotNull

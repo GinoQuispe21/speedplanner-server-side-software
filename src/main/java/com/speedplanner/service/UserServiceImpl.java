@@ -8,16 +8,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-@Service
-public class UserServiceImpl implements UserService {
+import java.util.ArrayList;
+import java.util.List;
+
+@Service("userServiceImpl")
+public class UserServiceImpl implements UserService , UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public User createUser(User user) {
-        return userRepository.save(user);
+        User newUser = new User();
+        newUser.setUsername(user.getUsername());
+        newUser.setEmail(user.getEmail());
+        newUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        newUser.setRole("1");
+        return userRepository.save(newUser);
     }
 
     @Override
@@ -36,7 +53,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new ResourceNotFoundException("User not found with Id: "+userId));
         user.setUsername(userRequest.getUsername());
-        user.setPassword(userRequest.getPassword());
+        user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         user.setEmail(userRequest.getEmail());
         return userRepository.save(user);
     }
@@ -57,5 +74,18 @@ public class UserServiceImpl implements UserService {
             return userRepository.save(user);
         }).orElseThrow(() ->
                 new ResourceNotFoundException("User not found with Id: "+userId));
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        com.speedplanner.model.User user = userRepository.findByUsername(username);
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
+                true, true, true, true, buildGranted(user.getRole()) );
+    }
+
+    public List<GrantedAuthority> buildGranted(String role){
+        List<GrantedAuthority> auths = new ArrayList<>();
+        auths.add(new SimpleGrantedAuthority(role));
+        return auths;
     }
 }
