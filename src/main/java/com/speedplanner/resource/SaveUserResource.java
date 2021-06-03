@@ -22,4 +22,5 @@ public class SaveUserResource {
     @NotNull
     @Size(max = 40)
     private String email;
+    private String role;
 }
