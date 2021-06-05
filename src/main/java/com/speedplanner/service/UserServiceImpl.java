@@ -77,6 +77,18 @@ public class UserServiceImpl implements UserService , UserDetailsService {
     }
 
     @Override
+    public User getUserByUsername(String username) {
+        User myuser = userRepository.findByUsername(username);
+        if (myuser == null){
+            User user =  new User();
+            return user;
+        }
+        else {
+            return myuser;
+        }
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         com.speedplanner.model.User user = userRepository.findByUsername(username);
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
