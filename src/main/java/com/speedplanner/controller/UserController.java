@@ -66,6 +66,12 @@ public class UserController {
         return userService.deleteUser(userId);
     }
 
+    @Operation(summary = "Get User by Username", description = "Get User by Username from Speedplanner", tags = { "users" })
+    @GetMapping("/usersUsername/{username}")
+    public UserResource getUserByUsername(@PathVariable(name = "username") String username) {
+        return convertToResource(userService.getUserByUsername(username));
+    }
+
     private User convertToEntity(SaveUserResource resource){
         return mapper.map(resource, User.class);
     }
