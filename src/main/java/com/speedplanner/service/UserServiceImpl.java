@@ -89,6 +89,15 @@ public class UserServiceImpl implements UserService , UserDetailsService {
     }
 
     @Override
+    public User updateUserFields(Long userId, User userFieldsRequest) {
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new ResourceNotFoundException("User not found with Id: "+userId));
+        user.setUsername(userFieldsRequest.getUsername());
+        user.setEmail(userFieldsRequest.getEmail());
+        return userRepository.save(user);
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         com.speedplanner.model.User user = userRepository.findByUsername(username);
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
