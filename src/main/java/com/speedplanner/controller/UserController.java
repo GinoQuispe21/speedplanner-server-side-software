@@ -55,33 +55,21 @@ public class UserController {
 
 
     @Operation(summary = "Update User", description = "Update user by his Id from Speedplanner", tags = { "users" })
-    @PutMapping(value = "/users/{userId}", params = {"all", "noPwd"})
+    @PutMapping(value = "/users/{userId}")
     public UserResource updateUser(@PathVariable(name = "userId") Long userId,
-                                   @Valid @RequestBody SaveUserResource resource,
-                                   @RequestParam(value = "all") String all,
-                                   @RequestParam(value = "noPwd", required = false) String noPwd){
+                                   @Valid @RequestBody SaveUserResource resource){
         User user = convertToEntity(resource);
         return convertToResource(userService.updateUser(userId, user));
     }
 
-    @Operation(summary = "Update User", description = "Update user by his Id from Speedplanner", tags = { "users" })
-    @PutMapping(value = "/users/{userId}", params = {"noPwd"})
-    public UserResource updateUser(@PathVariable(name = "userId") Long userId,
-                                   @Valid @RequestBody SaveUserFieldsResource fieldsResource,
-                                   @RequestParam(value = "noPwd") String noPwd){
+    @Operation(summary = "Update User", description = "Update user by his Id from Speedplanner without changing " +
+            "password", tags = { "users" })
+    @PutMapping(value = "/users/{userId}/fields")
+    public UserResource updateUserFields(@PathVariable(name = "userId") Long userId,
+                                   @Valid @RequestBody SaveUserFieldsResource fieldsResource){
         User user = convertToEntity(fieldsResource);
         return convertToResource(userService.updateUserFields(userId, user));
     }
-
-    /*@Operation(summary = "Update User's username and email.", description = "Updates only a user's Username and Email " +
-            "fields by his Id from Speedplanner. This is needed for better functioning of the Profile screen" +
-            "in our frontend", tags = { "users" })
-    @PutMapping("/users/{userId}")
-    public UserResource updateUserFields(@PathVariable(name = "userId") Long userId,
-                                         @Valid @RequestBody SaveUserFieldsResource resource){
-        User user = convertToEntity(resource);
-        return convertToResource(userService.updateUser(userId, user));
-    }*/
 
     @Operation(summary = "Delete User", description = "Delete user by his Id from Speedplanner", tags = { "users" })
     @DeleteMapping("/users/{userId}")
