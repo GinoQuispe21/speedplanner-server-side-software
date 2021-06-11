@@ -1,5 +1,6 @@
 package com.speedplanner.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
@@ -7,6 +8,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 
 @Entity
@@ -25,11 +28,13 @@ public class Time {
 
     @NotBlank
     @NotNull
-    private Date startTime;
+    @JsonFormat(pattern = "HH:mm")
+    private LocalTime startTime;
 
     @NotBlank
     @NotNull
-    private Date finishTime;
+    @JsonFormat(pattern = "HH:mm")
+    private LocalTime finishTime;
 
     //Many to one Relationship betwen Course and Time
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
