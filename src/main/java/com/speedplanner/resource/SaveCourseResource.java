@@ -21,4 +21,8 @@ public class SaveCourseResource {
     @NotNull
     @Size(max = 30)
     private String email;
+
+    @NotBlank
+    @NotNull
+    private String color;
 }
