@@ -59,6 +59,14 @@ public class UserServiceImpl implements UserService , UserDetailsService {
     }
 
     @Override
+    public User changePassword(Long userId, User userRequest){
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new ResourceNotFoundException("User not found with Id: "+userId));
+        user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
+        return userRepository.save(user);
+    }
+
+    @Override
     public ResponseEntity<?> deleteUser(Long userId) {
         return userRepository.findById(userId).map(user -> {
             userRepository.delete(user);

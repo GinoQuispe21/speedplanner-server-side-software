@@ -41,6 +41,7 @@ public class CourseServiceImpl implements CourseService{
             course.setName(courseDetail.getName());
             course.setDescription(courseDetail.getDescription());
             course.setEmail(courseDetail.getEmail());
+            course.setColor(courseDetail.getColor());
             return courseRepository.save(course);
         }).orElseThrow(() -> new ResourceNotFoundException("Course", "Id", courseId));
 
