@@ -8,4 +8,5 @@ public class CourseResource {
     private String name;
     private String description;
     private String email;
+    private String color;
 }
