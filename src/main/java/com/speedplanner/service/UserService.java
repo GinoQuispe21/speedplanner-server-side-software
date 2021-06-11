@@ -11,6 +11,7 @@ public interface UserService {
     User getUserById(Long userId);
     Page<User> getAllUsers(Pageable pageable);
     User updateUser(Long userId, User userRequest);
+    User changePassword(Long userId, User userRequest);
     ResponseEntity<?> deleteUser(Long userId);
     User setUserProfile(Long userId, Profile profile);
     User getUserByUsername(String username);
