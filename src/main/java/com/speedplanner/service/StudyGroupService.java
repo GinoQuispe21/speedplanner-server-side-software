@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 
 public interface StudyGroupService {
     Page<StudyGroup> getAllStudyGroups(Pageable pageable);
-    Page<StudyGroup> getAllStudyGroupsByCourseId(Pageable pageable, Long courseId);
+    Page<StudyGroup> getAllStudyGroupsByCourseId(Long courseId, Pageable pageable);
     StudyGroup getStudyGroupByIdAndCourseId(Long studyGroupId, Long courseId);
     StudyGroup createStudyGroup(Long courseId, StudyGroup studyGroup);
     StudyGroup updateStudyGroup(Long courseId, Long studyGroupId, StudyGroup studyGroupRequest);
