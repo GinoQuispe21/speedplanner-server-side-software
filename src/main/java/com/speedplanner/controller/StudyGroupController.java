@@ -1,6 +1,8 @@
 package com.speedplanner.controller;
 
+import com.speedplanner.model.Course;
 import com.speedplanner.model.StudyGroup;
+import com.speedplanner.resource.CourseResource;
 import com.speedplanner.resource.StudyGroupResource;
 import com.speedplanner.resource.SaveStudyGroupResource;
 import com.speedplanner.service.StudyGroupService;
@@ -29,13 +31,11 @@ public class StudyGroupController {
     @Autowired
     private StudyGroupService studyGroupService;
 
-    @Operation(summary = "Get all Study Groups", description = "Gets all the Study Groups from Speedplanner",
-            tags = { "study groups" })
-    @GetMapping("/studyGroups")
-    public Page<StudyGroupResource> getAllStudyGroups(Pageable pageable) {
-        Page<StudyGroup> groupPage = studyGroupService.getAllStudyGroups(pageable);
-        List<StudyGroupResource> resources = groupPage.getContent().stream().map(this::convertToResource).collect(Collectors.toList());
-
+    @Operation(summary = "Get All Study Groups from a Course", description = "Get All Study Groups by Course Id from Speedplanner", tags = { "study groups", "courses" })
+    @GetMapping("/courses/{courseId}/studyGroups")
+    public Page<StudyGroupResource> getAllStudyGroupsByCourseId(@PathVariable(name = "courseId") Long courseId, Pageable pageable) {
+        Page<StudyGroup> studyGroups = studyGroupService.getAllStudyGroupsByCourseId(courseId, pageable);
+        List<StudyGroupResource> resources = studyGroups.getContent().stream().map(this::convertToResource).collect(Collectors.toList());
         return new PageImpl<>(resources, pageable, resources.size());
     }
 

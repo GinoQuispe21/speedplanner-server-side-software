@@ -29,10 +29,10 @@ public class StudyGroupServiceImpl implements StudyGroupService {
     }
 
     @Override
-    public Page<StudyGroup> getAllStudyGroupsByCourseId(Pageable pageable, Long courseId) {
+    public Page<StudyGroup> getAllStudyGroupsByCourseId(Long courseId, Pageable pageable) {
         if (!courseRepository.existsById(courseId))
             throw new ResourceNotFoundException("Course", "Id", courseId);
-        return studyGroupRepository.findAllByCourseId(pageable, courseId);
+        return studyGroupRepository.findAllByCourseId(courseId, pageable);
     }
 
     @Override
