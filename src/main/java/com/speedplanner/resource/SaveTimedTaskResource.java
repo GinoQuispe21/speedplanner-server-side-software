@@ -1,11 +1,13 @@
 package com.speedplanner.resource;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -16,10 +18,12 @@ public class SaveTimedTaskResource {
     private boolean finished;
 
     @NotNull
-    private Date startTime;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm")
+    private LocalDateTime startTime;
 
     @NotNull
-    private Date finishTime;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm")
+    private LocalDateTime finishTime;
 
     @NotNull
     @NotBlank

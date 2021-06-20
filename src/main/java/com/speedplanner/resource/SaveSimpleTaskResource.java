@@ -1,5 +1,6 @@
 package com.speedplanner.resource;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,6 +9,7 @@ import javax.persistence.Lob;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -17,6 +19,7 @@ public class SaveSimpleTaskResource {
     private boolean finished;
 
     @NotNull
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm")
     private Date deadline;
 
     @NotNull
