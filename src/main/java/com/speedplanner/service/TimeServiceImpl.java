@@ -1,6 +1,7 @@
 package com.speedplanner.service;
 
 import com.speedplanner.exception.ResourceNotFoundException;
+import com.speedplanner.model.StudyGroup;
 import com.speedplanner.model.Time;
 import com.speedplanner.repository.CourseRepository;
 import com.speedplanner.repository.TimeRepository;
@@ -19,12 +20,15 @@ public class TimeServiceImpl implements TimeService {
     @Autowired
     private CourseRepository courseRepository;
 
+
     @Override
     public ResponseEntity<?> deleteTime(Long courseId, Long timeId) {
-        return timeRepository.findByIdAndCourseId(timeId, courseId).map(time ->{
+        return courseRepository.findById(courseId).map(course -> {
+            Time time= timeRepository.findById(timeId).orElseThrow(() ->
+                    new ResourceNotFoundException("Group", "Id", timeId));
             timeRepository.delete(time);
             return ResponseEntity.ok().build();
-        }).orElseThrow(() -> new ResourceNotFoundException(" Customer not found with Id " + timeId + " and UserId " + timeId));
+        }).orElseThrow(() -> new ResourceNotFoundException("Course not found with Id: "+courseId));
     }
 
     @Override
@@ -51,16 +55,16 @@ public class TimeServiceImpl implements TimeService {
 
     @Override
     public Time getTimeByIdAndCourseId(Long courseId, Long timeId) {
-        return timeRepository.findByIdAndCourseId(timeId, courseId)
-                .orElseThrow(() -> new ResourceNotFoundException(
-                        "Customer not found with Id" + timeId +
-                                "and UserId " + courseId
-                ));
+        if (!courseRepository.existsById(courseId))
+            throw new ResourceNotFoundException("Course not found with Id: "+courseId);
+        return timeRepository.findByIdAndCourseId(timeId, courseId);
     }
 
     @Override
     public Page<Time> getAllTimesByCourseId(Long courseId, Pageable pageable) {
-        return timeRepository.findByCourseId(courseId, pageable);
+        if (!courseRepository.existsById(courseId))
+            throw new ResourceNotFoundException("Course", "Id", courseId);
+        return timeRepository.findAllByCourseId(courseId, pageable);
     }
 
 

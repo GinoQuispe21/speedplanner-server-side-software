@@ -61,9 +61,11 @@ public class TimeController {
 
     @Operation(summary = "Delete Time by Course Id and Time Id", description = "Delete a Time from Course by Course Id and Time Id", tags = { "times" })
     @DeleteMapping("/courses/{courseId}/times/{timeId}")
-    public ResponseEntity<?> deleteTime(@PathVariable(name = "courseId") Long courseId, @PathVariable(name = "timeId") Long timeId) {
+    public ResponseEntity<?> deleteTime(@PathVariable(name = "timeId") Long timeId,
+                                              @PathVariable(name = "courseId") Long courseId) {
         return timeService.deleteTime(courseId, timeId);
     }
+
     private Time convertToEntity(SaveTimeResource resource) { return mapper.map(resource, Time.class); }
 
     private TimeResource convertToResource(Time entity) { return mapper.map(entity, TimeResource.class); }
